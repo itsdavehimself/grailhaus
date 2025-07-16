@@ -1,0 +1,16 @@
+# server
+/server/bin/
+/server/obj/
+/server/disccc.db
+/server/Migrations/
+/server/**/*.db-wal
+/server/**/*.db-shm
+
+# client
+/client/node_modules/
+/client/dist/
+/client/.vite/
+
+# system stuff
+.DS_Store
+.env
