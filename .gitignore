@@ -1,7 +1,7 @@
 # server
 /server/bin/
 /server/obj/
-/server/disccc.db
+/server/grailhaus.db
 /server/Migrations/
 /server/**/*.db-wal
 /server/**/*.db-shm
