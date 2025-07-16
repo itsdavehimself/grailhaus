@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=disccc.db"));
+    options.UseSqlite("Data Source=grailhaus.db"));
 
 builder.Services.AddIdentityCore<User>(opts =>
 {
@@ -74,7 +74,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "Disccc API", Version = "v1" });
+    c.SwaggerDoc("v1", new() { Title = "Grailhaus API", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new()
     {

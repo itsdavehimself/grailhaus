@@ -75,12 +75,6 @@ public class AuthController : ControllerBase
         if (!isValid)
             return BadRequest(new {message = "Invalid credentials"});
 
-        if (user.FirstSignIn)
-        {
-            user.FirstSignIn = false;
-            await _userManager.UpdateAsync(user);
-        }
-
         string token = CreateToken(user);
 
         Response.Cookies.Append("access_token", token, new CookieOptions
