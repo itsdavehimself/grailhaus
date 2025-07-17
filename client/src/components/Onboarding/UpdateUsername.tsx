@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { OnboardingSteps } from "../../types/OnboardingSteps";
 import SubmitButton from "../SubmitButton";
 import ValidatedInput from "../ValidatedInput";
 import { useForm } from "react-hook-form";
@@ -11,15 +10,15 @@ import { useSkipOnboarding } from "../../hooks/useSkipOnboarding";
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-interface UpdateUsernameProps {
-  setStep: React.Dispatch<React.SetStateAction<OnboardingSteps>>;
-}
-
 type Input = {
   username: string;
 };
 
-const UpdateUsername: React.FC<UpdateUsernameProps> = ({ setStep }) => {
+interface UpdateUsernameProps {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const UpdateUsername: React.FC<UpdateUsernameProps> = ({ setShowModal }) => {
   const user = useAppSelector((state) => state.user.user);
   const [usernameInput, setUsernameInput] = useState(user?.username || "");
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +45,6 @@ const UpdateUsername: React.FC<UpdateUsernameProps> = ({ setStep }) => {
 
     if (user?.username === data.username) {
       setError(null);
-      setStep(OnboardingSteps.HomeCourse);
       return;
     }
 
@@ -70,7 +68,7 @@ const UpdateUsername: React.FC<UpdateUsernameProps> = ({ setStep }) => {
       }
 
       setError(null);
-      setStep(OnboardingSteps.HomeCourse);
+      setShowModal(false);
     } catch (err) {
       if (err instanceof Error) {
         console.error("Network or server error:", err.message);
@@ -83,46 +81,49 @@ const UpdateUsername: React.FC<UpdateUsernameProps> = ({ setStep }) => {
   };
 
   return (
-    <OnboardingModal
-      title="Pick a username"
-      subtitle="This will show up in group rounds and invites"
-      skip={skip}
-      children={
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-          <div className="flex flex-col w-full">
-            <ValidatedInput
-              register={register("username", {
-                required: "Please enter your username",
-              })}
-              error={errors.username}
-              placeholder="Username"
-              type="text"
-              value={usernameInput}
-              onChange={(e) => setUsernameInput(e.target.value)}
-            />
-            <div className="self-start min-h-5 text-error-red text-sm">
-              {error === "Invalid credentials" ? (
-                <p>Something doesn't look right. Check your credentials.</p>
-              ) : error || skipError ? (
-                <div className="self-start text-error-red text-sm space-y-1">
-                  {(error || skipError)?.split(",").map((msg, idx) => (
-                    <p key={idx}>{msg.trim()}</p>
-                  ))}
-                </div>
-              ) : errors.username?.message ? (
-                <p>{errors.username.message}</p>
-              ) : null}
+    <div className="absolute inset-0 z-100 h-screen w-screen flex flex-col justify-center items-center">
+      <OnboardingModal
+        title="What do we call you?"
+        subtitle="Used for your collection, wishlist, and more."
+        skip={skip}
+        children={
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-2"
+          >
+            <div className="flex flex-col w-full">
+              <ValidatedInput
+                register={register("username", {
+                  required: "Please enter your username",
+                })}
+                error={errors.username}
+                placeholder="Username"
+                type="text"
+                value={usernameInput}
+                onChange={(e) => setUsernameInput(e.target.value)}
+              />
+              <div className="self-start min-h-5 text-error-red text-sm">
+                {error === "Invalid credentials" ? (
+                  <p>Something doesn't look right. Check your credentials.</p>
+                ) : error || skipError ? (
+                  <div className="self-start text-error-red text-sm space-y-1">
+                    {(error || skipError)?.split(",").map((msg, idx) => (
+                      <p key={idx}>{msg.trim()}</p>
+                    ))}
+                  </div>
+                ) : errors.username?.message ? (
+                  <p>{errors.username.message}</p>
+                ) : null}
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <SubmitButton
-              label={user?.username === usernameInput ? "Next" : "Update"}
-            />
-            <DoLaterButton action={() => setStep(OnboardingSteps.HomeCourse)} />
-          </div>
-        </form>
-      }
-    />
+            <div className="flex flex-col gap-2">
+              <SubmitButton label="Update" />
+              <DoLaterButton action={skip} />
+            </div>
+          </form>
+        }
+      />
+    </div>
   );
 };
 
