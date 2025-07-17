@@ -1,9 +1,11 @@
 [
   {
     "Brand": "Seiko",
+    "Model": "Presage",
     "Name": "Cocktail Time STAR BAR Limited Edition",
     "Reference": "SRPH78J1",
     "CaseSizeMm": 40.5,
+    "LugToLugMm": 47.5,
     "ThicknessMm": 11.8,
     "CaseMaterial": "Steel",
     "MovementType": "automatic",
@@ -18,9 +20,11 @@
   },
   {
     "Brand": "Cartier",
+    "Model": "Santos",
     "Name": "Santos de Cartier Large",
     "Reference": "W2SA0009",
     "CaseSizeMm": 39.8,
+    "LugToLugMm": 47.5,
     "ThicknessMm": 9.38,
     "CaseMaterial": "Steel and Yellow Gold",
     "MovementType": "automatic",
@@ -34,10 +38,12 @@
     "ImageUrl": "https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw9da7d713/images/large/ed3be62019c45211816b9e1ed471a834.png?sw=2000&sh=2000&sm=fit&sfrm=png"
   },
   {
-    "Brand": "G-Shock",
+    "Brand": "Casio",
+    "Model": "G-Shock",
     "Name": "GMB2100BD-1A",
     "Reference": "GMB2100BD-1A",
     "CaseSizeMm": 44.4,
+    "LugToLugMm": 49.8,
     "ThicknessMm": 12.8,
     "CaseMaterial": "Black Ion-Plated Stainless Steel",
     "MovementType": "quartz",
@@ -52,9 +58,11 @@
   },
   {
     "Brand": "Rolex",
+    "Model": "Datejust",
     "Name": "Datejust 41",
     "Reference": "126334",
     "CaseSizeMm": 41,
+    "LugToLugMm": 47.6,
     "ThicknessMm": 11.7,
     "CaseMaterial": "Oystersteel and White Gold",
     "MovementType": "automatic",
@@ -69,9 +77,11 @@
   },
   {
     "Brand": "Tissot",
+    "Model": "PRX Powermatic 80",
     "Name": "PRX Powermatic 80",
     "Reference": "T1374071104100",
     "CaseSizeMm": 40,
+    "LugToLugMm": 44.6,
     "ThicknessMm": 0,
     "CaseMaterial": "Stainless Steel",
     "MovementType": "automatic",
