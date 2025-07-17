@@ -20,10 +20,10 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({
           <h3 className="text-lg font-semibold">{title}</h3>
           <p className="text-sm text-gray-500">{subtitle}</p>
         </div>
-        <div className="flex justify-center items-center h-6 w-6">
+        <div className="flex justify-center items-center h-5 w-5">
           <X
             onClick={skip}
-            className="text-gray-400 hover:cursor-pointer hover:text-text transition-all duration-200"
+            className="text-gray-400 hover:cursor-pointer hover:text-primary transition-all duration-200"
           />
         </div>
       </div>
