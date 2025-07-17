@@ -41,6 +41,7 @@ public class UserController : ControllerBase
       {
         email = user.Email,
         username = user.UserName,
+        user.FirstSignIn,
       });
   }
 
@@ -58,12 +59,29 @@ public class UserController : ControllerBase
     if (user is null) return Unauthorized();
 
     user.UserName = request.Username;
+    user.FirstSignIn = false;
     await _userManager.UpdateAsync(user);
 
     return Ok(new
     {
       message = "Username updated"
     });
+  }
+
+  [Authorize]
+  [HttpPost("first-sign-in")]
+  public async Task<IActionResult> UpdateFirstSignIn()
+  {
+    var email = User.FindFirst(ClaimTypes.Email)?.Value;
+    if (email is null) return Unauthorized();
+
+    var user = await _userManager.FindByEmailAsync(email);
+    if (user is null) return Unauthorized();
+
+    user.FirstSignIn = false;
+
+    await _userManager.UpdateAsync(user);
+    return Ok(new { message = "User onboarding completed" });
   }
 
   [HttpDelete]

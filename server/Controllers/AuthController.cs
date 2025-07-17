@@ -75,6 +75,13 @@ public class AuthController : ControllerBase
         if (!isValid)
             return BadRequest(new {message = "Invalid credentials"});
 
+        if (user.FirstSignIn)
+        {
+            user.FirstSignIn = false;
+            await _userManager.UpdateAsync(user);
+        }
+
+
         string token = CreateToken(user);
 
         Response.Cookies.Append("access_token", token, new CookieOptions
@@ -121,7 +128,7 @@ public class AuthController : ControllerBase
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    private string GenerateTempUsername(string email)
+    private static string GenerateTempUsername(string email)
     {
         var basePart = email.Split('@')[0];
         basePart = new string(basePart.Take(6).ToArray());
