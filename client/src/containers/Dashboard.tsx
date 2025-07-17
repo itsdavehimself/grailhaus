@@ -1,25 +1,28 @@
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "../app/hooks";
-import { logout } from "../app/slices/userSlice";
+import { useAppSelector } from "../app/hooks";
+import UpdateUsername from "../components/Onboarding/UpdateUsername";
+import { useEffect, useState } from "react";
 
 const Dashboard: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const user = useAppSelector((state) => state.user.user);
 
-  const handleLogout = async (): Promise<void> => {
-    await fetch(`${apiUrl}/api/auth/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
+  const [showUsernameModal, setShowUsernameModal] = useState(false);
 
-    dispatch(logout());
-    navigate("/login");
-  };
+  useEffect(() => {
+    if (user?.firstSignIn) {
+      setShowUsernameModal(true);
+    }
+  }, [user]);
 
   return (
-    <main>
-      <button onClick={() => handleLogout()}>Logout</button>
+    <main className="flex flex-col">
+      <h1 className="font-semibold mt-2">Grailhaus</h1>
+      <h2 className="text-xl font-semibold my-4">
+        Welcome back, {user?.username}
+      </h2>
+      <div className="border-1 border-gray-100 rounded-xl h-100 w-full"></div>
+      {showUsernameModal && (
+        <UpdateUsername setShowModal={setShowUsernameModal} />
+      )}
     </main>
   );
 };

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { fetchUser } from "./app/slices/userSlice";
 import Dashboard from "./containers/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import WithMobileNav from "./components/WithNav";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -21,14 +22,16 @@ function App() {
       <Route index element={<Home />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<WithMobileNav />}>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
     </Routes>
   );
 }
