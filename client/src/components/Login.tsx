@@ -77,11 +77,10 @@ const Login: React.FC = () => {
     <div className="flex flex-col h-screen w-screen bg-white justify-center items-center px-10 gap-10">
       <div className="flex flex-col gap-6">
         <h1 className="self-start text-6xl font-bold text-text">
-          Welcome back
+          Your vault awaits
         </h1>
         <div className="flex flex-col">
-          <p>We'll handle the scheduling.</p>
-          <p>You just keep hitting first available.</p>
+          <p>Your collection's right where you left it.</p>
         </div>
       </div>
       <form
@@ -104,7 +103,7 @@ const Login: React.FC = () => {
         />
         <div className="self-start min-h-5 text-error-red text-sm">
           {error === "Invalid credentials" ? (
-            <p>Something doesn't look right. Check your credentials.</p>
+            <p>Invalid credentials. Please try again.</p>
           ) : error ? (
             <div className="self-start text-error-red text-sm space-y-1">
               {error.split(",").map((msg, idx) => (
