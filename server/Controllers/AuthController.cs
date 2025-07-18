@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using server.Data;
 using server.Models;
 using server.DTOs;
 using Microsoft.AspNetCore.Identity;
@@ -7,7 +6,6 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
-using System.Threading.Tasks;
 
 namespace server.Controllers;
 

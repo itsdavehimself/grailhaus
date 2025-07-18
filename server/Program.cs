@@ -11,8 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=grailhaus.db"));
+builder.Services.AddDbContext<AppDbContext>(opt =>
+  opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention()
+);
 
 builder.Services.AddIdentityCore<User>(opts =>
 {
@@ -117,4 +118,12 @@ app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    await DataSeeder.SeedWatchesAsync(context);
+}
+
 app.Run();

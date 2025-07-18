@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using server.Models;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System.Text.Json;
 
 namespace server.Data;
 
@@ -12,119 +10,10 @@ public class AppDbContext : IdentityDbContext<User>
 
     public DbSet<Watch> Watches { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        var watchJson = @"[
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
-    ""Brand"": ""Seiko"",
-    ""Model"": ""Presage"",
-    ""Name"": ""Cocktail Time STAR BAR Limited Edition"",
-    ""Reference"": ""SRPH78J1"",
-    ""CaseSizeMm"": 40.5,
-    ""LugToLugMm"": 47.5,
-    ""ThicknessMm"": 11.8,
-    ""CaseMaterial"": ""Steel"",
-    ""MovementType"": ""automatic"",
-    ""Movement"": ""Caliber 4R35"",
-    ""PowerReserveHours"": 41,
-    ""Crystal"": ""Hardlex"",
-    ""WaterResistanceM"": 50,
-    ""Bracelet"": ""Leather"",
-    ""DialColor"": ""Gold"",
-    ""PriceUsd"": 495,
-    ""ImageUrl"": ""https://www.seikowatches.com/in-en/-/media/Images/Product--Image/All/Seiko/2022/02/20/02/44/SRPH78J1/SRPH78J1.png?mh=1200&mw=1200""
-  },
-  {
-    ""Brand"": ""Cartier"",
-    ""Model"": ""Santos"",
-    ""Name"": ""Santos de Cartier Large"",
-    ""Reference"": ""W2SA0009"",
-    ""CaseSizeMm"": 39.8,
-    ""LugToLugMm"": 47.5,
-    ""ThicknessMm"": 9.38,
-    ""CaseMaterial"": ""Steel and Yellow Gold"",
-    ""MovementType"": ""automatic"",
-    ""Movement"": ""Caliber 1847 MC"",
-    ""PowerReserveHours"": 48,
-    ""Crystal"": ""Sapphire"",
-    ""WaterResistanceM"": 100,
-    ""Bracelet"": ""Interchangeable Steel and Leather"",
-    ""DialColor"": ""Silvered Opaline"",
-    ""PriceUsd"": 12500,
-    ""ImageUrl"": ""https://www.cartier.com/dw/image/v2/BGTJ_PRD/on/demandware.static/-/Sites-cartier-master/default/dw9da7d713/images/large/ed3be62019c45211816b9e1ed471a834.png?sw=2000&sh=2000&sm=fit&sfrm=png""
-  },
-  {
-    ""Brand"": ""Casio"",
-    ""Model"": ""G-Shock"",
-    ""Name"": ""GMB2100BD-1A"",
-    ""Reference"": ""GMB2100BD-1A"",
-    ""CaseSizeMm"": 44.4,
-    ""LugToLugMm"": 49.8,
-    ""ThicknessMm"": 12.8,
-    ""CaseMaterial"": ""Black Ion-Plated Stainless Steel"",
-    ""MovementType"": ""quartz"",
-    ""Movement"": ""Solar-Powered Quartz"",
-    ""PowerReserveHours"": null,
-    ""Crystal"": ""Mineral Glass"",
-    ""WaterResistanceM"": 200,
-    ""Bracelet"": ""Black Ion-Plated Stainless Steel"",
-    ""DialColor"": ""Black"",
-    ""PriceUsd"": 600,
-    ""ImageUrl"": ""https://www.casio.com/content/dam/casio/product-info/locales/us/en/timepiece/product/watch/G/GM/gmb/gm-b2100bd-1a/assets/GM-B2100BD-1A.png.transform/main-visual-pc/image.png""
-  },
-  {
-    ""Brand"": ""Rolex"",
-    ""Model"": ""Datejust"",
-    ""Name"": ""Datejust 41"",
-    ""Reference"": ""126334"",
-    ""CaseSizeMm"": 41,
-    ""LugToLugMm"": 47.6,
-    ""ThicknessMm"": 11.7,
-    ""CaseMaterial"": ""Oystersteel and White Gold"",
-    ""MovementType"": ""automatic"",
-    ""Movement"": ""Caliber 3235"",
-    ""PowerReserveHours"": 70,
-    ""Crystal"": ""Sapphire with Cyclops"",
-    ""WaterResistanceM"": 100,
-    ""Bracelet"": ""Oyster or Jubilee"",
-    ""DialColor"": ""Varies (e.g. Blue, Slate, Silver, Wimbledon)"",
-    ""PriceUsd"": 11100,
-    ""ImageUrl"": ""https://media.rolex.com/image/upload/q_auto:eco/f_auto/t_v7/c_limit,w_800/v1/catalogue/2025/upright-c/m126334-0028""
-  },
-  {
-    ""Brand"": ""Tissot"",
-    ""Model"": ""PRX Powermatic 80"",
-    ""Name"": ""PRX Powermatic 80"",
-    ""Reference"": ""T1374071104100"",
-    ""CaseSizeMm"": 40,
-    ""LugToLugMm"": 44.6,
-    ""ThicknessMm"": 0,
-    ""CaseMaterial"": ""Stainless Steel"",
-    ""MovementType"": ""automatic"",
-    ""Movement"": ""Powermatic 80"",
-    ""PowerReserveHours"": 80,
-    ""Crystal"": ""Sapphire"",
-    ""WaterResistanceM"": 100,
-    ""Bracelet"": ""Integrated Stainless Steel"",
-    ""DialColor"": ""Varies (e.g. Blue, Black, Green, Light Blue)"",
-    ""PriceUsd"": 725,
-    ""ImageUrl"": ""https://assets.tissotwatches.com/transform/Extend/7cb35e0f-1746-4892-a054-b32700bdbe10/T137-407-11-051-00_shadow?io=transform:fit,width:800,height:800,gravity:center""
+    base.OnModelCreating(modelBuilder);
+    modelBuilder.Entity<Watch>().OwnsOne(w => w.Specs);
+    modelBuilder.Entity<Watch>().OwnsOne(w => w.Movement);
   }
-]
-
-";
-
-        var watches = JsonSerializer.Deserialize<List<Watch>>(watchJson);
-        if (watches != null)
-        {
-            int idCounter = 1;
-            foreach (var watch in watches)
-            {
-                watch.Id = idCounter++;
-            }
-            modelBuilder.Entity<Watch>().HasData(watches);
-        }
-    }
 }
