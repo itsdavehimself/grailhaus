@@ -1,5 +1,5 @@
 import { Search } from "lucide-react";
-import type { Watch } from "../types/Watch";
+import type { Watch } from "../../types/Watch";
 
 interface SearchBarProps {
   placeholder: string;

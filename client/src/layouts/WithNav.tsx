@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
-import MobileNav from "./Navbar/MobileNav";
+import MobileNav from "../components/navbar/MobileNav";
 import { useState } from "react";
-import AddScreen from "../containers/AddScreen";
+import AddScreen from "../features/add/AddScreen";
 
 const WithMobileNav: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState<boolean>(false);

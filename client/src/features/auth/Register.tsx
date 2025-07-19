@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
-import { useAppDispatch } from "../app/hooks";
 import { useNavigate } from "react-router";
-import { fetchUser } from "../app/slices/userSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { fetchUser } from "../../app/slices/userSlice";
 import { Link } from "react-router";
-import SubmitButton from "./SubmitButton";
-import ValidatedInput from "./ValidatedInput";
+import ValidatedInput from "../../components/common/ValidatedInput";
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -15,7 +14,7 @@ type Inputs = {
   password: string;
 };
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Login: React.FC = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/api/auth/login`, {
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +53,7 @@ const Login: React.FC = () => {
         console.log(errorData);
         const message = Array.isArray(errorData)
           ? errorData.join(", ")
-          : errorData?.message || "Login failed";
+          : errorData?.message || "Registration failed";
         setError(message);
         return;
       }
@@ -77,10 +76,10 @@ const Login: React.FC = () => {
     <div className="flex flex-col h-screen w-screen bg-white justify-center items-center px-10 gap-10">
       <div className="flex flex-col gap-6">
         <h1 className="self-start text-6xl font-bold text-text">
-          Your vault awaits
+          Start your collection
         </h1>
         <div className="flex flex-col">
-          <p>Your collection's right where you left it.</p>
+          <p>Track the grails. Tell your story.</p>
         </div>
       </div>
       <form
@@ -116,13 +115,18 @@ const Login: React.FC = () => {
             <p>{errors.password.message}</p>
           ) : null}
         </div>
-        <SubmitButton label="Sign in" />
-        <Link to="/forgot" className="text-sm hover:cursor-pointer py-2 px-2">
-          Forgot password?
+        <button
+          type="submit"
+          className="bg-primary text-white w-full rounded-lg h-10 font-bold hover:cursor-pointer hover:bg-hover transition-all duration-200"
+        >
+          Sign Up
+        </button>
+        <Link to="/login" className="text-sm hover:cursor-pointer py-2 px-2">
+          Already got an account?
         </Link>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

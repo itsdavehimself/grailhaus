@@ -1,23 +1,23 @@
 import { X } from "lucide-react";
-import { AddScreenType } from "../types/AddScreenType";
-import SegmentedToggle from "../components/SegementedToggle";
-import SearchBar from "../components/SearchBar";
-import WatchCard from "../components/WatchCard";
-import type { Watch } from "../types/Watch";
-import { fetchSearchResults } from "../service/fetchSearchResults";
-import { useDebounce } from "../hooks/useDebounce";
+import { AddScreenType } from "../../../types/AddScreenType";
+import SegmentedToggle from "./SegementedToggle";
+import SearchBar from "../../../components/common/SearchBar";
+import WatchCard from "./WatchCard";
+import type { Watch } from "../../../types/Watch";
+import { fetchSearchResults } from "../../../service/fetchSearchResults";
+import { useDebounce } from "../../../hooks/useDebounce";
 import { useState } from "react";
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-interface AddSearchProps {
+interface WatchSearchProps {
   setShowAddModal: React.Dispatch<React.SetStateAction<boolean>>;
   setShowScreen: React.Dispatch<React.SetStateAction<AddScreenType>>;
   showScreen: AddScreenType;
   setChoice: React.Dispatch<React.SetStateAction<Watch | null>>;
 }
 
-const AddSearch: React.FC<AddSearchProps> = ({
+const WatchSearch: React.FC<WatchSearchProps> = ({
   setShowAddModal,
   setShowScreen,
   showScreen,
@@ -92,4 +92,4 @@ const AddSearch: React.FC<AddSearchProps> = ({
   );
 };
 
-export default AddSearch;
+export default WatchSearch;

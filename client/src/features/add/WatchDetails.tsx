@@ -1,17 +1,17 @@
-import type { Watch } from "../types/Watch";
+import type { Watch } from "../../types/Watch";
 import { X } from "lucide-react";
 import { ChevronLeft } from "lucide-react";
-import SubmitButton from "./SubmitButton";
-import SecondaryButton from "./SecondaryButton";
-import SpecSection from "./SpecSection";
+import SubmitButton from "../../components/common/SubmitButton";
+import SecondaryButton from "../../components/common/SecondaryButton";
+import SpecSection from "./components/SpecSection";
 
-interface AddToCollectionProps {
+interface WatchDetails {
   watch: Watch;
   setShowAddModal: React.Dispatch<React.SetStateAction<boolean>>;
   setChoice: React.Dispatch<React.SetStateAction<Watch | null>>;
 }
 
-const AddToCollection: React.FC<AddToCollectionProps> = ({
+const WatchDetails: React.FC<WatchDetails> = ({
   watch,
   setShowAddModal,
   setChoice,
@@ -95,4 +95,4 @@ const AddToCollection: React.FC<AddToCollectionProps> = ({
   );
 };
 
-export default AddToCollection;
+export default WatchDetails;

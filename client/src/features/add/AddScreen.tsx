@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { AddScreenType } from "../types/AddScreenType";
-import AddSearch from "../components/AddSearch";
-import type { Watch } from "../types/Watch";
-import AddToCollection from "../components/AddToCollection";
+import { AddScreenType } from "../../types/AddScreenType";
+import WatchSearch from "./components/WatchSearch";
+import type { Watch } from "../../types/Watch";
+import AddToCollection from "./WatchDetails";
 
 interface AddScreenProps {
   setShowAddModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,7 +16,7 @@ const AddScreen: React.FC<AddScreenProps> = ({ setShowAddModal }) => {
 
   return (
     <>
-      <AddSearch
+      <WatchSearch
         showScreen={showScreen}
         setShowScreen={setShowScreen}
         setShowAddModal={setShowAddModal}

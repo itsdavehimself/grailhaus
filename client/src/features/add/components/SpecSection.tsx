@@ -1,4 +1,4 @@
-import LabelValue from "./LabelValue";
+import LabelValue from "../../../components/LabelValue";
 
 interface SpecSectionProps {
   title: string;

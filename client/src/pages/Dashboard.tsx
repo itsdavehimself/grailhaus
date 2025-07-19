@@ -1,5 +1,5 @@
 import { useAppSelector } from "../app/hooks";
-import UpdateUsername from "../components/Onboarding/UpdateUsername";
+import UpdateUsername from "../components/onboarding/UpdateUsername";
 import { useEffect, useState } from "react";
 
 const Dashboard: React.FC = () => {

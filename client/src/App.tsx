@@ -1,14 +1,17 @@
 import "./App.css";
 import { Route, Routes } from "react-router";
-import Home from "./containers/Home";
-import Register from "./components/Register";
-import Login from "./components/Login";
+import Home from "./pages/Home";
+import Register from "./features/auth/Register";
+import Login from "./features/auth/Login";
 import { useAppDispatch } from "./app/hooks";
 import { useEffect } from "react";
 import { fetchUser } from "./app/slices/userSlice";
-import Dashboard from "./containers/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import WithMobileNav from "./components/WithNav";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./layouts/ProtectedRoute";
+import WithMobileNav from "./layouts/WithNav";
+import Collection from "./features/collection/Collection";
+import Grails from "./features/grails/Grails";
+import Profile from "./features/profile/Profile";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -28,6 +31,30 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/collection"
+          element={
+            <ProtectedRoute>
+              <Collection />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/grails"
+          element={
+            <ProtectedRoute>
+              <Grails />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

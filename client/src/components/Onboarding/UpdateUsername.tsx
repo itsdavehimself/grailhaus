@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
-import SubmitButton from "../SubmitButton";
-import ValidatedInput from "../ValidatedInput";
+import SubmitButton from "../common/SubmitButton";
+import ValidatedInput from "../common/ValidatedInput";
 import { useForm } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
 import OnboardingModal from "./OnboardingModal";

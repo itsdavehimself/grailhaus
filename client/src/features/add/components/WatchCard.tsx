@@ -1,4 +1,4 @@
-import type { Watch } from "../types/Watch";
+import type { Watch } from "../../../types/Watch";
 
 interface WatchCardProps {
   watch: Watch;
