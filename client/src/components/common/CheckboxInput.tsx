@@ -14,7 +14,7 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
   onClick,
 }) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 pb-2">
       <label className="text-sm font-semibold">{label}</label>
       <div className="flex gap-8 mt-1">
         {options.map((option, i) => (

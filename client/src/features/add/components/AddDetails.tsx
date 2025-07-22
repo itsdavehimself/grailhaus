@@ -1,14 +1,11 @@
 import NavHeader from "../../../components/common/NavHeader";
-import StyledInput from "../../../components/common/StyledInput";
 import type { Watch } from "../../../types/Watch";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import { NumericFormat } from "react-number-format";
-import { useEffect, useState, useRef } from "react";
-import { WATCH_CONDITION_OPTIONS } from "../../../types/WatchCondition";
-import Dropdown from "../../../components/common/Dropdown";
-import DatePicker from "../../../components/common/DatePicker";
-import CheckboxInput from "../../../components/common/CheckboxInput";
+import { useEffect, useState } from "react";
+import AcquisitionDetails from "./AcquisitionDetails";
+import AccordionTitle from "../../../components/common/AccordionTitle";
+import Media from "./Media";
 
 interface AddDetailsProps {
   watch: Watch;
@@ -16,13 +13,15 @@ interface AddDetailsProps {
   setShowAddModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type DetailInputs = {
+export type DetailInputs = {
   date: Date;
   purchasePrice: number;
   placeOfPurchase: string;
   condition: string;
   boxAndPapers: string[];
 };
+
+export type SectionName = "acquisition" | "media" | "maintenance";
 
 const AddDetails: React.FC<AddDetailsProps> = ({
   watch,
@@ -40,42 +39,30 @@ const AddDetails: React.FC<AddDetailsProps> = ({
       boxAndPapers: [],
     },
   });
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const condition = formWatch("condition");
   const date = formWatch("date");
   const boxAndPapers = formWatch("boxAndPapers");
 
+  const [openSection, setOpenSection] = useState<SectionName | null>(
+    "acquisition"
+  );
+  const [hoveringSection, setHoveringSection] = useState<SectionName | null>(
+    null
+  );
+
   useEffect(() => {
     register("purchasePrice", { valueAsNumber: true });
     register("condition");
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpenDropdown(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, [register]);
 
   const onSubmit: SubmitHandler<DetailInputs> = async (data) => {
     console.log(data);
   };
 
-  const handleToggle = (val: string) => {
-    const current = getValues("boxAndPapers") || [];
-    const newValue = current.includes(val)
-      ? current.filter((item: string) => item !== val)
-      : [...current, val];
-
-    setValue("boxAndPapers", newValue);
+  const handleSectionOpen = (section: SectionName) => {
+    if (openSection === section) {
+      setOpenSection(null);
+    } else setOpenSection(section);
   };
 
   return (
@@ -89,55 +76,40 @@ const AddDetails: React.FC<AddDetailsProps> = ({
         <h4 className="text-xl font-semibold mt-4">
           Add details about your {watch.brand}
         </h4>
-        <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
-          <h5 className="text-lg font-semibold">Acquisition</h5>
-          <div className="flex flex-col gap-y-4 mt-2">
-            <DatePicker
-              label="Date Acquired"
-              date={date}
-              onSelect={(val) => setValue("date", val)}
+        <form
+          className="flex flex-col gap-4 mt-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex flex-col gap-4 border-1 border-gray-200 rounded-xl px-4 py-2">
+            <AccordionTitle
+              label="Acquisition"
+              sectionKey="acquisition"
+              handleSectionOpen={handleSectionOpen}
+              setHoveringSection={setHoveringSection}
+              openSection={openSection}
+              hoveringSection={hoveringSection}
             />
-            <NumericFormat
-              prefix="$"
-              thousandSeparator
-              decimalScale={2}
-              fixedDecimalScale
-              allowNegative={false}
-              onValueChange={(values) => {
-                const val = values.floatValue ?? 0;
-                setValue("purchasePrice", val);
-              }}
-              customInput={(props) => (
-                <StyledInput
-                  {...props}
-                  label="Purchase Price"
-                  placeholder="$1,000.00"
-                />
-              )}
+            {openSection === "acquisition" && (
+              <AcquisitionDetails
+                date={date}
+                setValue={setValue}
+                getValues={getValues}
+                register={register}
+                condition={condition}
+                boxAndPapers={boxAndPapers}
+              />
+            )}
+          </div>
+          <div className="flex flex-col gap-4 border-1 border-gray-200 rounded-xl px-4 py-2">
+            <AccordionTitle
+              label="Media"
+              sectionKey="media"
+              handleSectionOpen={handleSectionOpen}
+              setHoveringSection={setHoveringSection}
+              openSection={openSection}
+              hoveringSection={hoveringSection}
             />
-            <StyledInput
-              label="Place of Purchase"
-              register={{ ...register("placeOfPurchase") }}
-              placeholder="Name of store, dealer, event, country, etc."
-            />
-            <Dropdown
-              ref={dropdownRef}
-              openDropdown={openDropdown}
-              setOpenDropdown={setOpenDropdown}
-              label="Condition"
-              value={condition}
-              onChange={(val) => setValue("condition", val)}
-              options={WATCH_CONDITION_OPTIONS}
-            />
-            <CheckboxInput
-              label="Box & Papers"
-              options={[
-                { label: "Box", value: "box" },
-                { label: "Papers", value: "papers" },
-              ]}
-              selection={boxAndPapers}
-              onClick={handleToggle}
-            />
+            {openSection === "media" && <Media />}
           </div>
           <button
             type="submit"
