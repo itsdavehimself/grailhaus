@@ -1,8 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
+@import "react-day-picker/style.css";
 
 @theme {
   --color-error-red: #e63946;
   --color-primary: #0d0d0d;
   --color-primary-hover: #1e1e1e;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.rdp-root {
+  --rdp-accent-color: #0d0d0d;
+  --rdp-day-height: 48px;
+  --rdp-day-width: 48px;
+  --rdp-day_button-height: 48px;
+  --rdp-day_button-width: 48px;
+  --rdp-weekday-text-align: center;
 }

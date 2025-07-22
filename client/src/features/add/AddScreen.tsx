@@ -1,32 +1,33 @@
 import { useState } from "react";
-import { AddScreenType } from "../../types/AddScreenType";
+import { SaveLocation } from "../../types/SaveLocation";
 import WatchSearch from "./components/WatchSearch";
 import type { Watch } from "../../types/Watch";
-import AddToCollection from "./WatchDetails";
+import WatchDetails from "./WatchDetails";
 
 interface AddScreenProps {
   setShowAddModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AddScreen: React.FC<AddScreenProps> = ({ setShowAddModal }) => {
-  const [showScreen, setShowScreen] = useState<AddScreenType>(
-    AddScreenType.Collection
+  const [saveLocation, setSaveLocation] = useState<SaveLocation>(
+    SaveLocation.Collection
   );
   const [choice, setChoice] = useState<Watch | null>(null);
 
   return (
     <>
       <WatchSearch
-        showScreen={showScreen}
-        setShowScreen={setShowScreen}
+        saveLocation={saveLocation}
+        setSaveLocation={setSaveLocation}
         setShowAddModal={setShowAddModal}
         setChoice={setChoice}
       />
-      {choice && showScreen === AddScreenType.Collection && (
-        <AddToCollection
+      {choice && (
+        <WatchDetails
           watch={choice}
           setShowAddModal={setShowAddModal}
           setChoice={setChoice}
+          saveLocation={saveLocation}
         />
       )}
     </>

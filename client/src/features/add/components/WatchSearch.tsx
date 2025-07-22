@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import { AddScreenType } from "../../../types/AddScreenType";
+import { SaveLocation } from "../../../types/SaveLocation";
 import SegmentedToggle from "./SegementedToggle";
 import SearchBar from "../../../components/common/SearchBar";
 import WatchCard from "./WatchCard";
@@ -12,15 +12,15 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
 interface WatchSearchProps {
   setShowAddModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setShowScreen: React.Dispatch<React.SetStateAction<AddScreenType>>;
-  showScreen: AddScreenType;
+  setSaveLocation: React.Dispatch<React.SetStateAction<SaveLocation>>;
+  saveLocation: SaveLocation;
   setChoice: React.Dispatch<React.SetStateAction<Watch | null>>;
 }
 
 const WatchSearch: React.FC<WatchSearchProps> = ({
   setShowAddModal,
-  setShowScreen,
-  showScreen,
+  setSaveLocation,
+  saveLocation,
   setChoice,
 }) => {
   const [search, setSearch] = useState<string>("");
@@ -53,9 +53,9 @@ const WatchSearch: React.FC<WatchSearchProps> = ({
             Where would you like to add to?
           </h2>
           <SegmentedToggle
-            option={showScreen}
-            setOption={setShowScreen}
-            options={[AddScreenType.Collection, AddScreenType.Grails]}
+            option={saveLocation}
+            setOption={setSaveLocation}
+            options={[SaveLocation.Collection, SaveLocation.Grails]}
             labels={["Collection", "Grails"]}
           />
         </div>
@@ -72,7 +72,7 @@ const WatchSearch: React.FC<WatchSearchProps> = ({
         {search === "" && (
           <div className="flex justify-center items-center h-full w-full text-gray-300 text-sm">
             Search for a piece to add to your{" "}
-            {showScreen === "Collection" ? "collection" : "grail list"}
+            {saveLocation === "Collection" ? "collection" : "grail list"}
           </div>
         )}
         {search !== "" && (

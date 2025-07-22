@@ -7,7 +7,7 @@ interface SpecSectionProps {
 
 const SpecSection: React.FC<SpecSectionProps> = ({ title, specs }) => {
   return (
-    <div className="flex flex-col gap-2 mt-8 pl-1">
+    <div className="flex flex-col gap-2 pl-1">
       <h5 className="font-semibold text-lg mb-2">{title}</h5>
       <div className="grid grid-cols-2 gap-y-3 gap-x-10">
         {specs.map((spec, i) =>
