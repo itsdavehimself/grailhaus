@@ -42,6 +42,11 @@ const AddDetails: React.FC<AddDetailsProps> = ({
   const condition = formWatch("condition");
   const date = formWatch("date");
   const boxAndPapers = formWatch("boxAndPapers");
+  const purchasePrice = formWatch("purchasePrice");
+  const [watchImages, setWatchImages] = useState<File[]>([]);
+  const [documentImages, setDocumentImages] = useState<File[]>([]);
+  const [uploadingWatch, setUploadingWatch] = useState(false);
+  const [uploadingDocs, setUploadingDocs] = useState(false);
 
   const [openSection, setOpenSection] = useState<SectionName | null>(
     "acquisition"
@@ -97,6 +102,7 @@ const AddDetails: React.FC<AddDetailsProps> = ({
                 register={register}
                 condition={condition}
                 boxAndPapers={boxAndPapers}
+                purchasePrice={purchasePrice}
               />
             )}
           </div>
@@ -109,7 +115,18 @@ const AddDetails: React.FC<AddDetailsProps> = ({
               openSection={openSection}
               hoveringSection={hoveringSection}
             />
-            {openSection === "media" && <Media />}
+            {openSection === "media" && (
+              <Media
+                watchImages={watchImages}
+                documentImages={documentImages}
+                setWatchImages={setWatchImages}
+                setDocumentImages={setDocumentImages}
+                uploadingWatch={uploadingWatch}
+                uploadingDocs={uploadingDocs}
+                setUploadingWatch={setUploadingWatch}
+                setUploadingDocs={setUploadingDocs}
+              />
+            )}
           </div>
           <button
             type="submit"

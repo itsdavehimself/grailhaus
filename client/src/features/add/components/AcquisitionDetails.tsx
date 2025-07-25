@@ -1,5 +1,4 @@
 import DatePicker from "../../../components/common/DatePicker";
-import { NumericFormat } from "react-number-format";
 import StyledInput from "../../../components/common/StyledInput";
 import Dropdown from "../../../components/common/Dropdown";
 import CheckboxInput from "../../../components/common/CheckboxInput";
@@ -11,6 +10,7 @@ import type {
   UseFormRegister,
 } from "react-hook-form";
 import type { DetailInputs } from "./AddDetails";
+import CurrencyInput from "../../../components/common/CurrencyInput";
 
 interface AcquisitionDetailsProps {
   date: Date;
@@ -19,6 +19,7 @@ interface AcquisitionDetailsProps {
   register: UseFormRegister<DetailInputs>;
   condition: string;
   boxAndPapers: string[];
+  purchasePrice: number;
 }
 
 const AcquisitionDetails: React.FC<AcquisitionDetailsProps> = ({
@@ -28,6 +29,7 @@ const AcquisitionDetails: React.FC<AcquisitionDetailsProps> = ({
   condition,
   boxAndPapers,
   register,
+  purchasePrice,
 }) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
@@ -65,23 +67,10 @@ const AcquisitionDetails: React.FC<AcquisitionDetailsProps> = ({
         date={date}
         onSelect={(val) => setValue("date", val)}
       />
-      <NumericFormat
-        prefix="$"
-        thousandSeparator
-        decimalScale={2}
-        fixedDecimalScale
-        allowNegative={false}
-        onValueChange={(values) => {
-          const val = values.floatValue ?? 0;
-          setValue("purchasePrice", val);
-        }}
-        customInput={(props) => (
-          <StyledInput
-            {...props}
-            label="Purchase Price"
-            placeholder="$1,000.00"
-          />
-        )}
+      <CurrencyInput
+        label="Purchase Price"
+        value={purchasePrice}
+        onValueChange={(val) => setValue("purchasePrice", val)}
       />
       <StyledInput
         label="Place of Purchase"
